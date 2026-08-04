@@ -1,6 +1,8 @@
 package com.bettersmithingplus;
 
+import com.bettersmithingplus.init.ModBlockEntities;
 import com.bettersmithingplus.init.ModBlocks;
+import com.bettersmithingplus.init.ModCapabilities;
 import com.bettersmithingplus.init.ModCreativeTabs;
 import com.bettersmithingplus.init.ModItems;
 import com.mojang.logging.LogUtils;
@@ -21,5 +23,7 @@ public class BetterSmithingPlus {
         ModBlocks.register(modEventBus);
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
+        ModBlockEntities.register(modEventBus);
+        modEventBus.addListener(ModCapabilities::register);
     }
 }

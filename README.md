@@ -1,25 +1,43 @@
+# Better Smithing Plus
 
-Installation information
-=======
+A NeoForge 1.21.1 mod that adds a **Better Smithing Table** (改良锻造台) — smithing that never consumes templates.
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+## Features
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+- **No template consumption** — smithing on the Better Smithing Table does not consume the template (base and addition are consumed as usual)
+- **All smithing recipes supported** — vanilla and datapack recipes (netherite upgrades, armor trims) work out of the box, using the vanilla smithing table GUI
+- **Hopper automation** (since 1.1.0) — the table is a container:
+  - Hoppers/pipes can insert template, base, and addition ingredients into the matching slots
+  - Hoppers can extract the crafted result (base and addition consumed, template never)
+  - Items persist in the block entity, drop when the block is broken, and stay in sync between GUI and automation
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+## Crafting Recipe
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+8 iron ingots around a vanilla smithing table:
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+```
+III
+ISI
+III
+```
+
+## License
+
+This project is licensed under the **GNU Lesser General Public License v3.0** (LGPL-3.0).
+
+It contains code and design patterns derived from [AnvilCraft](https://github.com/Anvil-Dev/AnvilCraft) (Copyright © 2024 Gugle), also licensed under LGPL-3.0. See [LICENSE](LICENSE) and [NOTICE](NOTICE) for details.
+
+The template files originally supplied by the [NeoForged MDK](https://github.com/NeoForged/MDK) remain under the MIT license — see [TEMPLATE_LICENSE.txt](TEMPLATE_LICENSE.txt).
+
+## Installation
+
+- Minecraft 1.21.1
+- NeoForge 21.1.244 or later
+
+## Development
+
+```bash
+./gradlew.bat compileJava   # build
+./gradlew.bat runData       # generate data (blockstates, models, lang, loot, recipes, tags)
+./gradlew.bat runClient     # run the game
+```
