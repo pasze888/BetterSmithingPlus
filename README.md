@@ -32,7 +32,7 @@ The template files originally supplied by the [NeoForged MDK](https://github.com
 ## Installation
 
 - Minecraft 1.21.1
-- NeoForge 21.1.244 or later
+- NeoForge 21.1.219 or later
 
 ## Development
 
