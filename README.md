@@ -31,8 +31,6 @@ This project is licensed under the **GNU Lesser General Public License v3.0 or l
 - This project contains code and design patterns derived from
   [AnvilCraft](https://github.com/Anvil-Dev/AnvilCraft) (Copyright © 2024 Gugle),
   modified since August 2026 in accordance with the terms of the LGPL-3.0.
-- The full corresponding source code is available in this repository:
-  <https://github.com/yourname/Better-Smithing-Plus>
 - See [LICENSE](LICENSE) for the full license text and [NOTICE](NOTICE) for copyright attributions.
 - All textures, models, and sounds in this project are original creations and are
   **not** derived from AnvilCraft, whose assets are All Rights Reserved.
