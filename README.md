@@ -23,20 +23,15 @@ ISI
 III
 ```
 
-
 ## License
 
 This project is licensed under the **GNU Lesser General Public License v3.0 or later** (LGPL-3.0-or-later).
 
-- This project contains code and design patterns derived from
-  [AnvilCraft](https://github.com/Anvil-Dev/AnvilCraft) (Copyright © 2024 Gugle),
-  modified since August 2026 in accordance with the terms of the LGPL-3.0.
+- It contains code and design patterns derived from [AnvilCraft](https://github.com/Anvil-Dev/AnvilCraft) (Copyright © 2024 Gugle), also licensed under LGPL-3.0-or-later, modified for this project since August 2026.
+- The full corresponding source code is available in this repository: <https://github.com/pasze888/BetterSmithingPlus>
 - See [LICENSE](LICENSE) for the full license text and [NOTICE](NOTICE) for copyright attributions.
-- All textures, models, and sounds in this project are original creations and are
-  **not** derived from AnvilCraft, whose assets are All Rights Reserved.
-- The template files originally supplied by the
-  [NeoForged MDK](https://github.com/NeoForged/MDK) remain under the MIT license —
-  see [TEMPLATE_LICENSE.txt](TEMPLATE_LICENSE.txt).
+- All textures, models, and sounds in this project are original creations and are not taken from AnvilCraft, whose assets are All Rights Reserved.
+- The template files originally supplied by the [NeoForged MDK](https://github.com/NeoForged/MDK) remain under the MIT license — see [TEMPLATE_LICENSE.txt](TEMPLATE_LICENSE.txt).
 
 ## Installation
 
@@ -48,6 +43,5 @@ This project is licensed under the **GNU Lesser General Public License v3.0 or l
 ```bash
 ./gradlew.bat compileJava   # build
 ./gradlew.bat runData       # generate data (blockstates, models, lang, loot, recipes, tags)
-./gradlew.bat runClient     # run the game
 ./gradlew.bat runClient     # run the game
 ```

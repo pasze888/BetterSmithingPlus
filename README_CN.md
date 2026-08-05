@@ -23,11 +23,13 @@ III
 
 ## 许可证
 
-本项目基于 **GNU Lesser General Public License v3.0**（LGPL-3.0）发布。
+本项目基于 **GNU Lesser General Public License v3.0 或更高版本**（LGPL-3.0-or-later）发布。
 
-其中包含改编自 [AnvilCraft](https://github.com/Anvil-Dev/AnvilCraft)（Copyright © 2024 Gugle）的代码与设计模式，后者同样采用 LGPL-3.0。详见 [LICENSE](LICENSE) 与 [NOTICE](NOTICE)。
-
-由 [NeoForged MDK](https://github.com/NeoForged/MDK) 提供的模板文件仍遵循 MIT 许可证——见 [TEMPLATE_LICENSE.txt](TEMPLATE_LICENSE.txt)。
+- 其中包含改编自 [AnvilCraft](https://github.com/Anvil-Dev/AnvilCraft)（Copyright © 2024 Gugle，同样采用 LGPL-3.0-or-later）的代码与设计模式，本项目自 2026 年 8 月起进行了修改。
+- 本项目完整对应源代码可在本仓库获取：<https://github.com/pasze888/BetterSmithingPlus>
+- 完整许可证文本见 [LICENSE](LICENSE)，版权归属见 [NOTICE](NOTICE)。
+- 本项目所有纹理、模型与音效均为原创，未使用 AnvilCraft 的资产（其资产保留所有权利）。
+- 由 [NeoForged MDK](https://github.com/NeoForged/MDK) 提供的模板文件仍遵循 MIT 许可证——见 [TEMPLATE_LICENSE.txt](TEMPLATE_LICENSE.txt)。
 
 ## 安装要求
 
