@@ -1,22 +1,27 @@
 Better Smithing Plus
 Copyright (c) 2026 pasze888
 
-This project is distributed under the GNU Lesser General Public License v3.0
-(LGPL-3.0). See the LICENSE file for the full license text.
+This project is licensed under the GNU Lesser General Public License,
+version 3, or (at your option) any later version (LGPL-3.0-or-later).
+See the LICENSE file for the full license text.
 
-Portions of this project are derived from AnvilCraft
-(https://github.com/Anvil-Dev/AnvilCraft), Copyright (c) 2024 Gugle,
-licensed under the GNU Lesser General Public License v3.0:
+This project contains code and design patterns derived from AnvilCraft,
+modified by Better Smithing Plus since August 2026.
 
-- Design of the smithing-table block that opens a custom menu through
-  getMenuProvider (see BetterSmithingTableBlock)
-- Design of the automation item handler separating input-only and
-  output-only slots (see BetterSmithingTableAutomationHandler)
-- General machine menu architecture binding slots to a block entity
-  container (see BetterSmithingMenu and BetterSmithingTableBlockEntity)
+---
 
-The remaining code is based on vanilla Minecraft (Mojang) patterns and the
-NeoForge API under their respective licenses.
+Third-party notices:
 
-Any modifications to this project must be distributed under the same
-LGPL-3.0 license, and this notice must be preserved.
+AnvilCraft
+  Copyright (c) 2024 Gugle
+  https://github.com/Anvil-Dev/AnvilCraft
+  License: LGPL-3.0-or-later
+
+  The Better Smithing Table implementation is a modified version of
+  code from AnvilCraft. The original copyright notice and license
+  terms are preserved.
+
+NeoForged MDK (template files)
+  https://github.com/NeoForgeMDKs/MDK-1.21.1-ModDevGradle
+  License: MIT
+  See TEMPLATE_LICENSE.txt for details.
