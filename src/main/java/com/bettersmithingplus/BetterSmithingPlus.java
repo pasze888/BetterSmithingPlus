@@ -5,6 +5,7 @@ import com.bettersmithingplus.init.ModBlocks;
 import com.bettersmithingplus.init.ModCapabilities;
 import com.bettersmithingplus.init.ModCreativeTabs;
 import com.bettersmithingplus.init.ModItems;
+import com.bettersmithingplus.init.ModMenuTypes;
 import com.mojang.logging.LogUtils;
 import net.neoforged.bus.api.IEventBus;
 import net.neoforged.fml.common.Mod;
@@ -24,6 +25,7 @@ public class BetterSmithingPlus {
         ModItems.register(modEventBus);
         ModCreativeTabs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
+        ModMenuTypes.register(modEventBus);
         modEventBus.addListener(ModCapabilities::register);
     }
 }

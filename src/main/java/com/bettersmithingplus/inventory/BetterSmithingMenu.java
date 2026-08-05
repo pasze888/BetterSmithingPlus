@@ -2,6 +2,7 @@ package com.bettersmithingplus.inventory;
 
 import com.bettersmithingplus.block.entity.BetterSmithingTableBlockEntity;
 import com.bettersmithingplus.init.ModBlocks;
+import com.bettersmithingplus.init.ModMenuTypes;
 import net.minecraft.world.Container;
 import net.minecraft.world.ContainerListener;
 import net.minecraft.world.SimpleContainer;
@@ -9,7 +10,6 @@ import net.minecraft.world.entity.player.Inventory;
 import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.inventory.AbstractContainerMenu;
 import net.minecraft.world.inventory.ContainerLevelAccess;
-import net.minecraft.world.inventory.MenuType;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
@@ -26,7 +26,8 @@ import java.util.List;
  * 改良锻造台菜单（服务端）。
  *
  * <p>输入槽（0-2）绑定方块实体容器，结果槽（3）使用 {@link ResultContainer} 以保留
- * 配方解锁进度。菜单类型沿用原版 {@link MenuType#SMITHING}，客户端因此重建原版锻造台界面。
+ * 配方解锁进度。菜单类型为 {@link ModMenuTypes#BETTER_SMITHING}，客户端据此重建
+ * {@link ClientBetterSmithingMenu} 并复用原版锻造台界面。
  * 取走成品时只消耗基底（槽 1）与附加物（槽 2），不消耗模板（槽 0）。</p>
  */
 public class BetterSmithingMenu extends AbstractContainerMenu implements ContainerListener {
@@ -51,7 +52,7 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
     public BetterSmithingMenu(
         int containerId, Inventory playerInventory, ContainerLevelAccess access, BetterSmithingTableBlockEntity blockEntity
     ) {
-        super(MenuType.SMITHING, containerId);
+        super(ModMenuTypes.BETTER_SMITHING.get(), containerId);
         this.access = access;
         this.level = playerInventory.player.level();
         this.container = blockEntity.getContainer();
