@@ -13,13 +13,14 @@ import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.neoforged.neoforge.items.IItemHandler;
 import java.util.List;
 
 /**
  * 改良锻造台方块实体。
  *
  * <p>持有模板/基底/附加物三个输入槽的容器。锻造结果不在此存储，由
- * {@link #computeResult()} 按配方实时计算。</p>
+ * {@link #computeResult()} 按配方实时计算——GUI 结果槽与漏斗提取共用同一份输入。</p>
  */
 public class BetterSmithingTableBlockEntity extends BlockEntity {
     private final SimpleContainer container = new SimpleContainer(3) {
@@ -29,12 +30,18 @@ public class BetterSmithingTableBlockEntity extends BlockEntity {
             BetterSmithingTableBlockEntity.this.setChanged();
         }
     };
+    private final IItemHandler automationHandler = new BetterSmithingTableAutomationHandler(this);
+
     public BetterSmithingTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BETTER_SMITHING_TABLE.get(), pos, state);
     }
 
     public SimpleContainer getContainer() {
         return this.container;
+    }
+
+    public IItemHandler getAutomationHandler() {
+        return this.automationHandler;
     }
 
     /** 用当前输入实时计算锻造结果；配方不匹配或材料不足时返回空。 */

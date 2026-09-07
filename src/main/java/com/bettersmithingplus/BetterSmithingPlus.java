@@ -2,6 +2,7 @@ package com.bettersmithingplus;
 
 import com.bettersmithingplus.init.ModBlockEntities;
 import com.bettersmithingplus.init.ModBlocks;
+import com.bettersmithingplus.init.ModCapabilities;
 import com.bettersmithingplus.init.ModCreativeTabs;
 import com.bettersmithingplus.init.ModItems;
 import com.bettersmithingplus.init.ModMenuTypes;
@@ -25,5 +26,6 @@ public class BetterSmithingPlus {
         ModCreativeTabs.register(modEventBus);
         ModBlockEntities.register(modEventBus);
         ModMenuTypes.register(modEventBus);
+        modEventBus.addListener(ModCapabilities::register);
     }
 }

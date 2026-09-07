@@ -9,6 +9,9 @@ A Minecraft mod that adds a **Better Smithing Table** (改良锻造台) — smit
 - **No template consumption** — smithing on the Better Smithing Table does not consume the template (base and addition are consumed as usual)
 - **All smithing recipes supported** — vanilla and datapack recipes (netherite upgrades, armor trims) work out of the box, using the vanilla smithing table GUI
 - **In-block storage** — ingredients persist in the block entity and drop when the block is broken
+- **Hopper automation** — the table is a container:
+  - Hoppers/pipes can insert template, base, and addition ingredients into the matching slots
+  - Hoppers can extract the crafted result (base and addition consumed, template never)
 
 ## Supported Versions
 
