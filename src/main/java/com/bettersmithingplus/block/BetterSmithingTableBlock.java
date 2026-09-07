@@ -20,7 +20,7 @@ import javax.annotation.Nullable;
  * 改良锻造台方块。
  *
  * <p>继承原版 {@link SmithingTableBlock} 沿用其右键交互与统计逻辑；作为 {@link EntityBlock}
- * 持有容器方块实体，支持漏斗自动输入输出。</p>
+ * 持有容器方块实体，GUI 内直接锻造。</p>
  */
 public class BetterSmithingTableBlock extends SmithingTableBlock implements EntityBlock {
     private static final Component CONTAINER_TITLE =
@@ -50,7 +50,7 @@ public class BetterSmithingTableBlock extends SmithingTableBlock implements Enti
     }
 
     @Override
-    protected void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
+    public void onRemove(BlockState state, Level level, BlockPos pos, BlockState newState, boolean movedByPiston) {
         if (!state.is(newState.getBlock())) {
             if (level.getBlockEntity(pos) instanceof BetterSmithingTableBlockEntity blockEntity) {
                 Containers.dropContents(level, pos, blockEntity.getContainer());

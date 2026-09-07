@@ -15,7 +15,7 @@
     "III"
   ],
   "result": {
-    "count": 1,
-    "id": "bettersmithingplus:better_smithing_table"
-  }
+    "item": "bettersmithingplus:better_smithing_table"
+  },
+  "show_notification": true
 }

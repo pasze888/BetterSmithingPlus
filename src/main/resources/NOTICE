@@ -13,6 +13,16 @@ licensed under the GNU Lesser General Public License v3.0:
 - General machine menu architecture binding slots to a block entity
   container (see BetterSmithingMenu and BetterSmithingTableBlockEntity)
 
+Port to Minecraft 1.20.1 (MinecraftForge) references the implementation of
+AnvilCraft 1.4.1-pre-release.1 (https://github.com/Anvil-Dev/AnvilCraft),
+Copyright (c) 2024 Gugle, licensed under the GNU Lesser General Public
+License v3.0, in particular:
+
+- Forge 1.20.1 registration style using DeferredRegister/RegistryObject
+  (as in ModVillagers)
+- Smithing recipe handling on 1.20.1: recipe matching, assemble,
+  template-not-consumed takeaway flow (see RoyalSmithingMenu)
+
 The remaining code is based on vanilla Minecraft (Mojang) patterns and the
 NeoForge API under their respective licenses.
 

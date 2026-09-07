@@ -3,7 +3,7 @@ package com.bettersmithingplus.data;
 import com.bettersmithingplus.BetterSmithingPlus;
 import com.bettersmithingplus.init.ModBlocks;
 import net.minecraft.data.PackOutput;
-import net.neoforged.neoforge.common.data.LanguageProvider;
+import net.minecraftforge.common.data.LanguageProvider;
 
 public class ModLanguageProvider extends LanguageProvider {
     private final String locale;

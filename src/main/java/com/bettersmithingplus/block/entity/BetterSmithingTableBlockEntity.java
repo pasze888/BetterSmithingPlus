@@ -2,15 +2,13 @@ package com.bettersmithingplus.block.entity;
 
 import com.bettersmithingplus.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
-import net.minecraft.core.HolderLookup;
+import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
 import net.minecraft.world.SimpleContainer;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipe;
-import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
 import java.util.List;
@@ -40,25 +38,35 @@ public class BetterSmithingTableBlockEntity extends BlockEntity {
     /** 用当前输入实时计算锻造结果；配方不匹配或材料不足时返回空。 */
     public ItemStack computeResult() {
         if (this.level == null) return ItemStack.EMPTY;
-        SmithingRecipeInput input = new SmithingRecipeInput(
-            this.container.getItem(0), this.container.getItem(1), this.container.getItem(2));
-        List<RecipeHolder<SmithingRecipe>> list =
-            this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, input, this.level);
+        List<SmithingRecipe> list =
+            this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, this.container, this.level);
         if (list.isEmpty()) return ItemStack.EMPTY;
-        RecipeHolder<SmithingRecipe> recipe = list.getFirst();
-        ItemStack stack = recipe.value().assemble(input, this.level.registryAccess());
+        SmithingRecipe recipe = list.get(0);
+        ItemStack stack = recipe.assemble(this.container, this.level.registryAccess());
         return stack.isItemEnabled(this.level.enabledFeatures()) ? stack : ItemStack.EMPTY;
     }
 
     @Override
-    protected void saveAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.saveAdditional(tag, registries);
-        ContainerHelper.saveAllItems(tag, this.container.getItems(), registries);
+    protected void saveAdditional(CompoundTag tag) {
+        super.saveAdditional(tag);
+        ContainerHelper.saveAllItems(tag, this.copyItems());
     }
 
     @Override
-    protected void loadAdditional(CompoundTag tag, HolderLookup.Provider registries) {
-        super.loadAdditional(tag, registries);
-        ContainerHelper.loadAllItems(tag, this.container.getItems(), registries);
+    public void load(CompoundTag tag) {
+        super.load(tag);
+        NonNullList<ItemStack> list = NonNullList.withSize(this.container.getContainerSize(), ItemStack.EMPTY);
+        ContainerHelper.loadAllItems(tag, list);
+        for (int i = 0; i < list.size(); i++) {
+            this.container.setItem(i, list.get(i));
+        }
+    }
+
+    private NonNullList<ItemStack> copyItems() {
+        NonNullList<ItemStack> list = NonNullList.withSize(this.container.getContainerSize(), ItemStack.EMPTY);
+        for (int i = 0; i < list.size(); i++) {
+            list.set(i, this.container.getItem(i));
+        }
+        return list;
     }
 }

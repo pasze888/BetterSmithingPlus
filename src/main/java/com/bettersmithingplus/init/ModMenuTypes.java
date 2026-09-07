@@ -4,10 +4,10 @@ import com.bettersmithingplus.BetterSmithingPlus;
 import com.bettersmithingplus.inventory.ClientBetterSmithingMenu;
 import net.minecraft.core.registries.Registries;
 import net.minecraft.world.inventory.MenuType;
-import net.neoforged.bus.api.IEventBus;
-import net.neoforged.neoforge.common.extensions.IMenuTypeExtension;
-import net.neoforged.neoforge.registries.DeferredHolder;
-import net.neoforged.neoforge.registries.DeferredRegister;
+import net.minecraftforge.eventbus.api.IEventBus;
+import net.minecraftforge.common.extensions.IForgeMenuType;
+import net.minecraftforge.registries.RegistryObject;
+import net.minecraftforge.registries.DeferredRegister;
 
 public final class ModMenuTypes {
     public static final DeferredRegister<MenuType<?>> MENU_TYPES =
@@ -17,9 +17,9 @@ public final class ModMenuTypes {
      * 改良锻造台菜单类型。工厂仅在客户端重建菜单时调用（服务端菜单由方块创建），
      * 因此直接构造客户端专用菜单 {@link ClientBetterSmithingMenu}。
      */
-    public static final DeferredHolder<MenuType<?>, MenuType<ClientBetterSmithingMenu>> BETTER_SMITHING =
+    public static final RegistryObject<MenuType<ClientBetterSmithingMenu>> BETTER_SMITHING =
         MENU_TYPES.register("better_smithing_table",
-            () -> IMenuTypeExtension.create((containerId, inventory, buffer) ->
+            () -> IForgeMenuType.create((containerId, inventory, buffer) ->
                 new ClientBetterSmithingMenu(containerId, inventory)));
 
     private ModMenuTypes() {

@@ -5,7 +5,9 @@
       "conditions": {
         "items": [
           {
-            "items": "minecraft:smithing_table"
+            "items": [
+              "minecraft:smithing_table"
+            ]
           }
         ]
       },
@@ -20,13 +22,14 @@
   },
   "requirements": [
     [
-      "has_the_recipe",
-      "has_smithing_table"
+      "has_smithing_table",
+      "has_the_recipe"
     ]
   ],
   "rewards": {
     "recipes": [
       "bettersmithingplus:better_smithing_table"
     ]
-  }
+  },
+  "sends_telemetry_event": false
 }

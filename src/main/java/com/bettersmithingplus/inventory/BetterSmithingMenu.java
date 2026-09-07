@@ -13,10 +13,8 @@ import net.minecraft.world.inventory.ContainerLevelAccess;
 import net.minecraft.world.inventory.ResultContainer;
 import net.minecraft.world.inventory.Slot;
 import net.minecraft.world.item.ItemStack;
-import net.minecraft.world.item.crafting.RecipeHolder;
 import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipe;
-import net.minecraft.world.item.crafting.SmithingRecipeInput;
 import net.minecraft.world.level.Level;
 import org.jetbrains.annotations.Nullable;
 
@@ -44,10 +42,10 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
     private final Level level;
     private final SimpleContainer container;
     private final ResultContainer resultSlots = new ResultContainer();
-    private final List<RecipeHolder<SmithingRecipe>> recipes;
+    private final List<SmithingRecipe> recipes;
 
     @Nullable
-    private RecipeHolder<SmithingRecipe> selectedRecipe;
+    private SmithingRecipe selectedRecipe;
 
     public BetterSmithingMenu(
         int containerId, Inventory playerInventory, ContainerLevelAccess access, BetterSmithingTableBlockEntity blockEntity
@@ -62,21 +60,21 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return BetterSmithingMenu.this.recipes.stream()
-                    .anyMatch(recipe -> recipe.value().isTemplateIngredient(stack));
+                    .anyMatch(recipe -> recipe.isTemplateIngredient(stack));
             }
         });
         this.addSlot(new Slot(this.container, BASE_SLOT, 26, 48) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return BetterSmithingMenu.this.recipes.stream()
-                    .anyMatch(recipe -> recipe.value().isBaseIngredient(stack));
+                    .anyMatch(recipe -> recipe.isBaseIngredient(stack));
             }
         });
         this.addSlot(new Slot(this.container, ADDITION_SLOT, 44, 48) {
             @Override
             public boolean mayPlace(ItemStack stack) {
                 return BetterSmithingMenu.this.recipes.stream()
-                    .anyMatch(recipe -> recipe.value().isAdditionIngredient(stack));
+                    .anyMatch(recipe -> recipe.isAdditionIngredient(stack));
             }
         });
         this.addSlot(new Slot(this.resultSlots, RESULT_SLOT, 98, 48) {
@@ -113,7 +111,7 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
     public boolean stillValid(Player player) {
         return this.access.evaluate(
             (level, pos) -> level.getBlockState(pos).is(ModBlocks.BETTER_SMITHING_TABLE.get())
-                && player.canInteractWithBlock(pos, 4.0),
+                && pos.distToCenterSqr(player.position()) < 64.0,
             true
         );
     }
@@ -141,15 +139,14 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
     }
 
     private void createResult() {
-        SmithingRecipeInput input = this.createRecipeInput();
-        List<RecipeHolder<SmithingRecipe>> list =
-            this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, input, this.level);
+        List<SmithingRecipe> list =
+            this.level.getRecipeManager().getRecipesFor(RecipeType.SMITHING, this.container, this.level);
         if (list.isEmpty()) {
             this.resultSlots.setItem(0, ItemStack.EMPTY);
             return;
         }
-        RecipeHolder<SmithingRecipe> recipe = list.getFirst();
-        ItemStack stack = recipe.value().assemble(input, this.level.registryAccess());
+        SmithingRecipe recipe = list.get(0);
+        ItemStack stack = recipe.assemble(this.container, this.level.registryAccess());
         if (stack.isItemEnabled(this.level.enabledFeatures())) {
             this.selectedRecipe = recipe;
             this.resultSlots.setRecipeUsed(recipe);
@@ -159,14 +156,9 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
         }
     }
 
-    private SmithingRecipeInput createRecipeInput() {
-        return new SmithingRecipeInput(
-            this.container.getItem(0), this.container.getItem(1), this.container.getItem(2));
-    }
-
     private boolean mayPickup(Player player, boolean hasStack) {
         return this.selectedRecipe != null
-            && this.selectedRecipe.value().matches(this.createRecipeInput(), this.level);
+            && this.selectedRecipe.matches(this.container, this.level);
     }
 
     private void onTake(Player player, ItemStack stack) {
@@ -221,7 +213,7 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
                 return ItemStack.EMPTY;
             }
             if (itemstack1.isEmpty()) {
-                slot.setByPlayer(ItemStack.EMPTY);
+                slot.set(ItemStack.EMPTY);
             } else {
                 slot.setChanged();
             }
@@ -239,8 +231,8 @@ public class BetterSmithingMenu extends AbstractContainerMenu implements Contain
     }
 
     private boolean canMoveIntoInputSlots(ItemStack stack) {
-        return this.recipes.stream().anyMatch(recipe -> recipe.value().isTemplateIngredient(stack)
-            || recipe.value().isBaseIngredient(stack)
-            || recipe.value().isAdditionIngredient(stack));
+        return this.recipes.stream().anyMatch(recipe -> recipe.isTemplateIngredient(stack)
+            || recipe.isBaseIngredient(stack)
+            || recipe.isAdditionIngredient(stack));
     }
 }
