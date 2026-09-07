@@ -10,8 +10,6 @@ licensed under the GNU Lesser General Public License v3.0:
 
 - Design of the smithing-table block that opens a custom menu through
   getMenuProvider (see BetterSmithingTableBlock)
-- Design of the automation item handler separating input-only and
-  output-only slots (see BetterSmithingTableAutomationHandler)
 - General machine menu architecture binding slots to a block entity
   container (see BetterSmithingMenu and BetterSmithingTableBlockEntity)
 

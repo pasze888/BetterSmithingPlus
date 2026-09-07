@@ -21,7 +21,6 @@ public class BetterSmithingTableItem extends BlockItem {
         ItemStack stack, TooltipContext context, List<Component> tooltipComponents, TooltipFlag tooltipFlag
     ) {
         tooltipComponents.add(Component.translatable("tooltip.bettersmithingplus.no_template_consume"));
-        tooltipComponents.add(Component.translatable("tooltip.bettersmithingplus.hopper_automation"));
         super.appendHoverText(stack, context, tooltipComponents, tooltipFlag);
     }
 }
