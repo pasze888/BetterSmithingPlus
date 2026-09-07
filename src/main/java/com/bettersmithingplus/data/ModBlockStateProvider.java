@@ -23,7 +23,9 @@ public class ModBlockStateProvider extends BlockStateProvider {
             this.mcLoc("block/smithing_table_side"),
             this.mcLoc("block/smithing_table_side"),
             this.mcLoc("block/smithing_table_side")
-        );
+        )
+            // 破坏粒子与疾跑脚下粒子取模型 particle 贴图，与原版锻造台一致
+            .texture("particle", this.mcLoc("block/smithing_table_front"));
         this.simpleBlock(ModBlocks.BETTER_SMITHING_TABLE.get(), model);
     }
 }
