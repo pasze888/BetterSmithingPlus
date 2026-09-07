@@ -7,8 +7,12 @@
 
 | 分支 | MC 版本 / 加载器 | jar 版本号 |
 |---|---|---|
-| `main` | 1.21.1 / NeoForge | `<mod_version>`（如 `1.1.1`） |
+| `main` | 1.21.1 / NeoForge | `<mod_version>+<mc_version>`（如 `1.1.1+1.21.1`） |
 | `1.20.1` | 1.20.1 / Forge | `<mod_version>+1.20.1` |
+
+所有分支的 jar 版本号统一带 MC 后缀（`build.gradle` 的
+`version = "${mod_version}+${minecraft_version}"`），文件名永不冲突，
+单看文件名即可识别目标版本。
 
 新 MC 版本 → 从 `main` 开分支（如 `1.21.5`、`26.1`），`gradle.properties`
 里改 `minecraft_version` 与加载器版本，jar 版本号统一加 MC 后缀。
