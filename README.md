@@ -1,5 +1,7 @@
 # Better Smithing Plus
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 A Minecraft mod that adds a **Better Smithing Table** (改良锻造台) — smithing that never consumes templates.
 
 [![License](https://img.shields.io/badge/License-LGPL--3.0--or--later-blue.svg)](LICENSE)
@@ -15,7 +17,7 @@ A Minecraft mod that adds a **Better Smithing Table** (改良锻造台) — smit
 
 ## Supported Versions
 
-Minecraft versions are maintained per branch (see [docs/RELEASING.md](docs/RELEASING.md)):
+Minecraft versions are maintained per branch (see [docs/runbook/releasing.md](docs/runbook/releasing.md)):
 
 | Minecraft | Loader | Branch | Since |
 |---|---|---|---|

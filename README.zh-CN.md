@@ -1,6 +1,10 @@
 # Better Smithing Plus（更好的锻造）
 
+[English](README.md) | [简体中文](README.zh-CN.md)
+
 一个 Minecraft 模组，添加了**改良锻造台**——锻造时不消耗模板。
+
+[![License](https://img.shields.io/badge/License-LGPL--3.0--or--later-blue.svg)](LICENSE)
 
 ## 功能特性
 
@@ -13,7 +17,7 @@
 
 ## 支持版本
 
-各 Minecraft 版本按分支维护（见 [docs/RELEASING.md](docs/RELEASING.md)）：
+各 Minecraft 版本按分支维护（见 [docs/runbook/releasing.md](docs/runbook/releasing.md)）：
 
 | Minecraft | 加载器 | 分支 | 支持起始版本 |
 |---|---|---|---|
