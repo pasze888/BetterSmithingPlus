@@ -24,7 +24,7 @@ Minecraft versions are maintained per branch (see [docs/runbook/releasing.md](do
 | 1.21.1 | NeoForge 21.1.219+ | `main` | 1.0.0 |
 | 1.20.1 | Forge 47.4+ | `1.20.1` | 1.1.1 |
 
-Releases are tagged `v<version>+<mc_version>` on each branch, e.g. [`v1.1.1+1.21.1`](https://github.com/pasze888/BetterSmithingPlus/releases/tag/v1.1.1%2B1.21.1) and [`v1.1.1+1.20.1`](https://github.com/pasze888/BetterSmithingPlus/releases/tag/v1.1.1%2B1.20.1).
+Releases are tagged `<mod_id>-<mc_version>-<loader>-<mod_version>` on each branch, e.g. `bettersmithingplus-1.21.1-neoforge-1.2.0`; the tag must match the version written in `gradle.properties`, otherwise CI fails.
 
 ## Crafting Recipe
 
