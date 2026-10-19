@@ -59,6 +59,9 @@ properties 一致 → `./gradlew build -Pmod_version=<tag 版本>` → 把主 ja
 
 - 版本类型只认 `-alpha` / `-beta`，其余一律 release。判错的后果：mc-publish 按
   `prerelease = version_type != release` 填，预发布会被当正式版发出去并抢占 Latest
+- **发完非 main 分支后要把 Latest 还回去**：mc-publish 没有 latest 开关，GitHub 会把
+  最新的非预发布 Release 自动标为 Latest，于是发 1.20.1 会顶掉 main 的 Latest。
+  发布后手动执行 `gh release edit <main 的 tag> --latest`，让 Latest 始终指向主线
 - 有 `curseforge_project_id` 时才上传 CurseForge，否则只发 GitHub Release
 - 仓库 secret 需要 `CURSEFORGE_TOKEN`（上传 CurseForge 时必需）
 - 1.20.1（Forge）分支的 jar 经 MDG Legacy 自动 reobf 到 SRG，`build/libs`

@@ -226,7 +226,7 @@ jobs:
           github-token: ${{ secrets.GITHUB_TOKEN }}
 
           files: ${{ steps.artifact.outputs.path }}
-          name: ${{ steps.props.outputs.mod_name }} ${{ steps.version.outputs.version }}
+          name: ${{ steps.props.outputs.mod_name }} ${{ steps.version.outputs.version }} for ${{ steps.version.outputs.mc_version }}
           version: ${{ steps.version.outputs.version }}
           version-type: ${{ steps.version.outputs.version_type }}
           loaders: ${{ steps.version.outputs.loader }}
@@ -246,7 +246,7 @@ jobs:
           curseforge-token: ${{ secrets.CURSEFORGE_TOKEN }}
 
           files: ${{ steps.artifact.outputs.path }}
-          name: ${{ steps.props.outputs.mod_name }} ${{ steps.version.outputs.version }}
+          name: ${{ steps.props.outputs.mod_name }} ${{ steps.version.outputs.version }} for ${{ steps.version.outputs.mc_version }}
           version: ${{ steps.version.outputs.version }}
           version-type: ${{ steps.version.outputs.version_type }}
           loaders: ${{ steps.version.outputs.loader }}
