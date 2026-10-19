@@ -21,13 +21,6 @@ jobs:
     name: Release
     runs-on: ubuntu-latest
     steps:
-      # 手动触发（workflow_dispatch）时 ref 是分支而非 tag，必须有 tag 才继续
-      - name: "Guard: tag ref required"
-        if: ${{ github.ref_type != 'tag' }}
-        run: |
-          echo "::error::Release 只应在推送 tag 时触发，已中止。"
-          exit 1
-
       - name: Checkout tagged source
         uses: actions/checkout@v7.0.1
         with:
