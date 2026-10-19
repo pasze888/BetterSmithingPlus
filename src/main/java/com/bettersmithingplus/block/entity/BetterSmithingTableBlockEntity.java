@@ -2,6 +2,7 @@ package com.bettersmithingplus.block.entity;
 
 import com.bettersmithingplus.init.ModBlockEntities;
 import net.minecraft.core.BlockPos;
+import net.minecraft.core.Direction;
 import net.minecraft.core.NonNullList;
 import net.minecraft.nbt.CompoundTag;
 import net.minecraft.world.ContainerHelper;
@@ -11,13 +12,18 @@ import net.minecraft.world.item.crafting.RecipeType;
 import net.minecraft.world.item.crafting.SmithingRecipe;
 import net.minecraft.world.level.block.entity.BlockEntity;
 import net.minecraft.world.level.block.state.BlockState;
+import net.minecraftforge.common.capabilities.Capability;
+import net.minecraftforge.common.capabilities.ForgeCapabilities;
+import net.minecraftforge.common.util.LazyOptional;
+import net.minecraftforge.items.IItemHandler;
+import org.jetbrains.annotations.Nullable;
 import java.util.List;
 
 /**
  * 改良锻造台方块实体。
  *
  * <p>持有模板/基底/附加物三个输入槽的容器。锻造结果不在此存储，由
- * {@link #computeResult()} 按配方实时计算。</p>
+ * {@link #computeResult()} 按配方实时计算——GUI 结果槽与漏斗提取共用同一份输入。</p>
  */
 public class BetterSmithingTableBlockEntity extends BlockEntity {
     private final SimpleContainer container = new SimpleContainer(3) {
@@ -27,12 +33,35 @@ public class BetterSmithingTableBlockEntity extends BlockEntity {
             BetterSmithingTableBlockEntity.this.setChanged();
         }
     };
+
+    /** 漏斗/管道用的物品处理器，通过物品处理器能力对外暴露。 */
+    private LazyOptional<IItemHandler> automationHandler =
+        LazyOptional.of(() -> new BetterSmithingTableAutomationHandler(this));
+
     public BetterSmithingTableBlockEntity(BlockPos pos, BlockState state) {
         super(ModBlockEntities.BETTER_SMITHING_TABLE.get(), pos, state);
     }
 
     public SimpleContainer getContainer() {
         return this.container;
+    }
+
+    @Override
+    public <T> LazyOptional<T> getCapability(Capability<T> cap, @Nullable Direction side) {
+        if (cap == ForgeCapabilities.ITEM_HANDLER) return this.automationHandler.cast();
+        return super.getCapability(cap, side);
+    }
+
+    @Override
+    public void invalidateCaps() {
+        super.invalidateCaps();
+        this.automationHandler.invalidate();
+    }
+
+    @Override
+    public void reviveCaps() {
+        super.reviveCaps();
+        this.automationHandler = LazyOptional.of(() -> new BetterSmithingTableAutomationHandler(this));
     }
 
     /** 用当前输入实时计算锻造结果；配方不匹配或材料不足时返回空。 */

@@ -19,11 +19,13 @@ public class ModLanguageProvider extends LanguageProvider {
             this.addBlock(ModBlocks.BETTER_SMITHING_TABLE, "Better Smithing Table");
             this.add("container.bettersmithingplus.better_smithing_table", "Better Smithing Table");
             this.add("tooltip.bettersmithingplus.no_template_consume", "Smithing does not consume templates");
+            this.add("tooltip.bettersmithingplus.hopper_automation", "Supports hopper automation");
             this.add("itemGroup.bettersmithingplus", "Better Smithing Plus");
         } else {
             this.addBlock(ModBlocks.BETTER_SMITHING_TABLE, "改良锻造台");
             this.add("container.bettersmithingplus.better_smithing_table", "改良锻造台");
             this.add("tooltip.bettersmithingplus.no_template_consume", "锻造时不消耗模板");
+            this.add("tooltip.bettersmithingplus.hopper_automation", "支持漏斗自动输入输出");
             this.add("itemGroup.bettersmithingplus", "更好的锻造");
         }
     }
