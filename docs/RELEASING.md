@@ -5,46 +5,61 @@
 
 ## 分支与版本对应
 
-| 分支 | MC 版本 / 加载器 | jar 版本号 |
-|---|---|---|
-| `main` | 1.21.1 / NeoForge | `<mod_version>`（如 `1.1.1`） |
-| `1.20.1` | 1.20.1 / Forge | `<mod_version>+1.20.1` |
+| 分支 | MC 版本 / 加载器 | `mod_loader` | 本地构建产物 |
+|---|---|---|---|
+| `main` | 1.21.1 / NeoForge | `neoforge` | `bettersmithingplus-<mod_version>+1.21.1.jar` |
+| `1.20.1` | 1.20.1 / Forge | `forge` | `bettersmithingplus-<mod_version>+1.20.1.jar` |
 
-新 MC 版本 → 从 `main` 开分支（如 `1.21.5`、`26.1`），`gradle.properties`
-里改 `minecraft_version` 与加载器版本，jar 版本号统一加 MC 后缀。
+`build.gradle` 的 `version = "${mod_version}+${minecraft_version}"`，本地与 CI 的
+构建产物都带 MC 后缀。**发布出去的 jar 文件名改由 tag 决定**（见下），
+两者不同名是有意的：构建系统决定产物叫什么，发布流程决定发布叫什么。
+
+Java 版本由 `gradle.properties` 的 `java_version` 唯一指定，`build.gradle` 的
+toolchain 与 CI 安装的 JDK 都读它，不会各说各话。
 
 ## Tag 命名
 
 ```
-v<mod_version>+<mc_version>
+<mod_id>-<mc_version>-<loader>-<mod_version>
 ```
 
-例如：`v1.1.1+1.21.1`、`v1.1.1+1.20.1`。
+例如：`bettersmithingplus-1.20.1-forge-1.2.0`、
+`bettersmithingplus-1.21.1-neoforge-1.2.0`。
 
-- 同一 mod 版本的多个 MC 移植是**多个 tag**，靠 MC 后缀区分，永远唯一
-- tag 打在**对应分支**的最新提交上（annotated tag，附一句话说明）
-- 2026-08 之前的历史 tag（`v1.0.0`~`v1.1.1`）无后缀，保留不改
+- 与 mc-mod-ci / netsourcecasting 等仓统一；`release.yml` 的触发条件是
+  `on.push.tags: ['*-*-*-*']`，只有这个形状的 tag 才会触发发布
+- 三段元信息必须与 `gradle.properties` 的 `mod_id` / `minecraft_version` /
+  `mod_version` 逐字一致，否则发布工作流直接报错——不会静默发出错版本
+- 切分以 `-<loader>-` 为锚点左右切，不按固定段号：MC 预发布版本
+  （`1.21.1-pre1`、`26.1-snapshot2`）自带连字符，段数会变
+- **历史 tag 保留不改**：`v1.0.0`~`v1.1.1`（无后缀）与
+  `v<mod_version>+<mc_version>`（如 `v1.2.0+1.21.1`）是手动发版时期的产物，
+  不再新增
 
 ## 发版步骤
 
+构建与发布现在都由 CI 完成，本地不需要跑构建：
+
 ```bash
-# 1. 确认对应分支构建通过（jar 产物在 build/libs/）
-./gradlew build
+# 1. 改 gradle.properties 的 mod_version 并提交（tag 必须与它一致，否则 CI 报错）
+git add -A && git commit -m "Bump version to <mod_version>"
+git push origin <分支>
 
-# 2. 推分支与 tag
-git checkout <分支> && git push origin <分支>
-git tag -a v<mod_version>+<mc_version> -m "一句话说明"
-git push origin v<mod_version>+<mc_version>
+# 2. 打 tag 并推送 —— 触发 release.yml：CI 构建、重命名、发 GitHub Release（+ CurseForge）
+git tag <mod_id>-<mc_version>-<loader>-<mod_version>
+git push origin <mod_id>-<mc_version>-<loader>-<mod_version>
 
-# 3. 发 Release，挂上对应分支构建的 jar
-gh release create v<mod_version>+<mc_version> build/libs/bettersmithingplus-<mod_version>+<mc_version>.jar \
-  --verify-tag \
-  --title "Better Smithing Plus <mod_version> for <mc_version>" \
-  --notes "对应 Minecraft <mc_version>（加载器与版本）。…改动摘要…"
+# 3. 看结果
+gh run watch
 ```
 
-- `Latest` 标记始终指向主线（`main` 对应的 Release）：
-  `gh release edit v<...> --latest`
+发布链路：`release.yml` 读 `gradle.properties` 的元信息 → 校验 tag 三段与
+properties 一致 → `./gradlew build -Pmod_version=<tag 版本>` → 把主 jar 重命名为
+`<mod_id>-<mc_version>-<loader>-<mod_version>.jar` → mc-publish 上传。
+
+- 版本类型只认 `-alpha` / `-beta`，其余一律 release。判错的后果：mc-publish 按
+  `prerelease = version_type != release` 填，预发布会被当正式版发出去并抢占 Latest
+- 有 `curseforge_project_id` 时才上传 CurseForge，否则只发 GitHub Release
+- 仓库 secret 需要 `CURSEFORGE_TOKEN`（上传 CurseForge 时必需）
 - 1.20.1（Forge）分支的 jar 经 MDG Legacy 自动 reobf 到 SRG，`build/libs`
-  产物可直接发布；dev 环境产物（`build/devlibs`）不要发
-- 进阶：后续可加 GitHub Actions 按 tag 自动构建发布，届时本文件相应更新
+  产物可直接发布；dev 产物（`*-dev.jar`）由工作流排除
