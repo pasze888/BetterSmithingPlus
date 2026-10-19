@@ -14,7 +14,9 @@ tasks.named('wrapper', Wrapper).configure {
     distributionType = Wrapper.DistributionType.BIN
 }
 
-version = "${mod_version}+${minecraft_version}"
+// 版本号只放 mod_version：Minecraft 版本与加载器进 archivesName（见下），
+// 三者拼出的 jar 名与发布 tag 完全一致，发布流程不需要再改名。
+version = mod_version
 group = mod_group_id
 
 sourceSets.main.resources {
@@ -32,7 +34,8 @@ repositories {
 }
 
 base {
-    archivesName = mod_id
+    // 与发布 tag 同构：<mod_id>-<mc_version>-<loader>-<mod_version>
+    archivesName = "${mod_id}-${minecraft_version}-${mod_loader}"
 }
 
 // Minecraft 1.20.1 ships Java 17, so mods should target Java 17.
